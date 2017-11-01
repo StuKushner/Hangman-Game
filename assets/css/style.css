@@ -53,3 +53,7 @@ footer .footer {
 p, .section-title {
 	color: white;
 }
+
+#wins, #current-word, #remaining-guesses, #letters-guessed {
+	color: white;
+}
