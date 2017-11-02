@@ -6,62 +6,62 @@ var cities = ['lisbon', 'madrid', 'barcelona', 'paris',
 'ljubljana', 'salzburg', 'bucharest', 'milan'];
 
 var wins;
-var answerArray = [];
+var correctGuesses = [];
+var lettersInAnswer;
 var wrongGuesses = [];
 var remainingGuesses;
 var cityChosen;
+var underscores;
 
-document.onkeyup = function(event) {
-	setUpGame();
-	logic();
-	winOrLose();
-}
-	
 function setUpGame() {
 	wrongGuesses = [];
 	answerArray = [];
+	lettersInAnswer = [];
 	remainingGuesses = 10;
 	wins = 0;
 
 	cityChosen = cities[Math.floor(Math.random() * cities.length)];
-	cityLength = cityChosen.length;
+	console.log(cityChosen);
+	lettersInAnswer = cityChosen.split("");
+	underscores = lettersInAnswer.length;
 
-	for (var i = 0; i < cityLength; i++) {
+	for (var i = 0; i < underscores; i++) {
 		answerArray.push("_ ");
 	}
 
-	document.getElementById("current-word").innerHTML = answerArray.join("");
+	document.getElementById("current-word").innerHTML = answerArray.join(" ");
+	document.getElementById("remaining-guesses").innerHTML = remainingGuesses;
 }
 
-function logic() {
-	var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
+document.onkeyup = function(event) {
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	console.log(userGuess);
 
-	for (var i = 0; i < cityChosen.length; i++) {
-		if (userGuess === cityChosen[i]) {
-			answerArray[i] = userGuess;
-			remainingGuesses--;
-			document.getElementById("current-word").innerHTML = answerArray.join("");
-			document.getElementById("remaining-guesses").innerHTML = remainingGuesses;
-		} else {
-			wrongGuesses.push(", ");
-			remainingGuesses--;
-			document.getElementById("letters-guessed").innerHTML = wrongGuesses.join("");
-			document.getElementById("remaining-guesses").innerHTML = remainingGuesses;
+	if (cityChosen.indexOf(userGuess) > -1) {
+		for (var i = 0; i < underscores; i++) {
+			if (userGuess === cityChosen[i]) {
+				answerArray[i] = userGuess;
+				document.getElementById("current-word").innerHTML = answerArray.join(" ");
+			}
 		}
+	} else {
+		wrongGuesses.push(userGuess);
+		remainingGuesses--;
+		document.getElementById("remaining-guesses").innerHTML = remainingGuesses;
+		document.getElementById("letters-guessed").innerHTML = wrongGuesses.join(" ");
 	}
-}
 
-function winOrLose() {
-	if (answerArray[i] === cityChosen) {
+	if (answerArray.join(" ") === lettersInAnswer.join(" ")) {
 		alert("Congratulations! You Win!");
 		wins++;
 		document.getElementById("wins").innerHTML = wins;
-		startGame();
+		setUpGame();
 	}
 
-	if (remainingGuesses === 0) {
-		alert("The answer was " + cityChosen = ". Please try again.");
-		startGame();
+	else if (remainingGuesses === 0) {
+		alert("The answer was " + cityChosen + ". Please try again.");
+		setUpGame();
 	}
 }
 
+setUpGame();
