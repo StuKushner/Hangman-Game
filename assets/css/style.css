@@ -54,6 +54,6 @@ p, .section-title {
 	color: white;
 }
 
-#wins, #current-word, #remaining-guesses, #letters-guessed {
+#wins, #losses, #current-word, #remaining-guesses, #letters-guessed {
 	color: white;
 }
